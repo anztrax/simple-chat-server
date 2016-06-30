@@ -4,12 +4,12 @@
   "description": "just a simple chat server with socket.io",
   "scripts": {
     "stats": "webpack --profile --json > stats.json",
-    "start" : "webpack-dev-server",
+    "start": "webpack-dev-server",
     "deploy": "gh-pages -d build",
-    "build" : "webpack",
-    "test" : "karma start",
-    "test:ttd" : "npm run test -- --auto-watch --no-single-run",
-    "test:lint" : "eslint ./app ./tests --ext .js --ext .jsx --ignore-path .gitignore --ignore-pattern dist --cache"
+    "build": "webpack",
+    "test": "karma start",
+    "test:ttd": "npm run test -- --auto-watch --no-single-run",
+    "test:lint": "eslint ./app ./tests --ext .js --ext .jsx --ignore-path .gitignore --ignore-pattern dist --cache"
   },
   "keywords": [
     "chat",
@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "react": "^15.1.0",
-    "react-dom": "^15.1.0"
+    "react-dom": "^15.1.0",
+    "uuid": "^2.0.2"
   }
 }
