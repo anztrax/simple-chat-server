@@ -10,11 +10,13 @@ export default class App extends React.Component{
       notes : [
         {
           id : uuid.v4(),
-          task : 'Learn react'
+          task : 'Learn react',
+          editing : false
         },
         {
           id : uuid.v4(),
-          task : 'Do laundry'
+          task : 'Do laundry',
+          editing : false
         }
       ]
     };
@@ -25,16 +27,55 @@ export default class App extends React.Component{
     this.setState({
       notes : [...oldNotes, {
         id : uuid.v4(),
-        task : 'New task'
+        task : 'New task',
+        editing : false
       }]
     });
   }
 
+  deleteNote(id,e){
+    //avoid bubbling to edit
+    e.stopPropagation();
+
+    this.setState({
+      notes : this.state.notes.filter(note => note.id !== id)
+    })
+  }
+
+  activateNoteEdit(id){
+    this.setState({
+      notes : this.state.notes.map(note => {
+        if(note.id === id){
+          note.editing = true;
+        }
+        return note;
+      })
+    })
+  }
+
+  editNote(id,task){
+    this.setState({
+      notes : this.state.notes.map(note => {
+        if(note.id === id){
+          note.editing = false;
+          note.task = task;
+        }
+        return note;
+      })
+    });
+  }
+
   render(){
+    const { notes } = this.state;
     return (
       <div>
         <button onClick={this.addNote.bind(this)}>+</button>
-        <Notes notes={this.state.notes} />
+        <Notes
+          notes={notes}
+          onDelete={this.deleteNote.bind(this)}
+          onNoteClick={this.activateNoteEdit.bind(this)}
+          onEdit={this.editNote.bind(this)}
+        />
       </div>
     )
   }
