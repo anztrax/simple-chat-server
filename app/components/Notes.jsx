@@ -25,21 +25,22 @@ export default class Notes extends React.Component {
     const onNoteClick = this.props.onNoteClick || defaultOnNoteClick;
     return (
       <div>
-        <h2>Testing gan</h2>
-        <ul>
+        <h2>Todo App</h2>
+        <ul className="notes">
           {this.props.notes.map(note => {
             const id = note.id;
             const task = note.task;
             const editing = note.editing;
             return (
               <li key={id}>
-                <Note onClick={onNoteClick.bind(null,id)}>
+                <Note onClick={onNoteClick.bind(null,id)} className="note">
                   <Editable
+                    className="editable"
                     editing={editing}
                     value={task}
                     onEdit={onEdit.bind(null,id)}
                   />
-                  <button onClick={onDelete.bind(null,id)}>x</button>
+                  <button className="delete" onClick={onDelete.bind(null,id)}>x</button>
                 </Note>
               </li>
               );

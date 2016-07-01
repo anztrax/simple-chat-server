@@ -69,7 +69,7 @@ export default class App extends React.Component{
     const { notes } = this.state;
     return (
       <div>
-        <button onClick={this.addNote.bind(this)}>+</button>
+        <button className="add-note" onClick={this.addNote.bind(this)}>+</button>
         <Notes
           notes={notes}
           onDelete={this.deleteNote.bind(this)}
