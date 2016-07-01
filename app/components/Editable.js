@@ -1,32 +1,73 @@
 import React from 'react';
 
-export default class Editable extends React.Component{
+class Editable extends React.Component{
   constructor(props){
     super(props);
   }
   render(){
     const {editing,value,onEdit } = this.props;
     if(editing){
-      return <StaticEdit value={value} onEdit={onEdit} {...this.props} />
+      return <Edit value={value} onEdit={onEdit} {...this.props} />
     }
 
-    return <span {...this.props}>value : {value}</span>
+    return <Value value={value} {...this.props} />;
   }
 }
 
-
-class StaticEdit extends React.Component{
+export class Value extends React.Component{
   constructor(props){
     super(props);
   }
 
   render(){
-    const {onEdit, value } = this.props;
-
+    const { value } = this.props;
     return (
-      <div onClick={onEdit} {...this.props}>
-        <span>edit : {value}</span>
-      </div>
+      <span {...this.props}>{value}</span>
     )
   }
 }
+Editable.Value = Value;
+
+export class Edit  extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      value : this.props.value
+    }
+  }
+
+  render(){
+    const {value} = this.state;
+    return (
+      <input
+        type="text"
+        autoFocus={true}
+        value={value}
+        onChange={this.changeValue.bind(this)}
+        onBlur={this.finishEdit.bind(this)}
+        onKeyPress={this.checkEnter.bind(this)}
+        />
+    )
+  }
+
+  checkEnter(e){
+    if(e.key == 'Enter'){
+      this.finishEdit(e);
+    }
+  }
+
+  changeValue(e){
+    this.setState({value : e.target.value});
+  }
+
+  finishEdit(e){
+    const { onEdit }= this.props;
+    const value = e.target.value;
+    if(onEdit){
+      onEdit(value);
+    }
+  }
+}
+Editable.Edit = Edit;
+
+export default Editable;
